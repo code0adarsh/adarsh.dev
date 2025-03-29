@@ -1,13 +1,8 @@
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Suspense } from 'react';
-import dynamic from 'react-dynamic-import';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 
-// Dynamically import ThreeScene to avoid issues on unsupported browsers
-const ThreeScene = dynamic(() => import('./ThreeScene'), {
-  ssr: false,
-  loading: () => null
-});
+// Use React's lazy loading instead of react-dynamic-import
+const ThreeScene = lazy(() => import('./ThreeScene'));
 
 const HeroSection = () => {
   const [show3D, setShow3D] = useState(false);
