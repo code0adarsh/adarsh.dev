@@ -1,13 +1,30 @@
 
-import React, { useEffect, useRef } from 'react';
-import ThreeScene from './ThreeScene';
+import React, { useEffect, useRef, useState } from 'react';
+import { Suspense } from 'react';
+import dynamic from 'react-dynamic-import';
+
+// Dynamically import ThreeScene to avoid issues on unsupported browsers
+const ThreeScene = dynamic(() => import('./ThreeScene'), {
+  ssr: false,
+  loading: () => null
+});
 
 const HeroSection = () => {
+  const [show3D, setShow3D] = useState(false);
   const titleRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if WebGL is supported
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      setShow3D(!!gl);
+    } catch (e) {
+      setShow3D(false);
+    }
+
     setTimeout(() => {
       if (titleRef.current) {
         titleRef.current.style.opacity = '1';
@@ -32,9 +49,13 @@ const HeroSection = () => {
 
   return (
     <section id="home" className="relative h-screen w-full overflow-hidden bg-navy flex items-center justify-center">
-      <div className="absolute inset-0 z-0">
-        <ThreeScene />
-      </div>
+      {show3D && (
+        <div className="absolute inset-0 z-0">
+          <Suspense fallback={null}>
+            <ThreeScene />
+          </Suspense>
+        </div>
+      )}
       
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8">
         <div 

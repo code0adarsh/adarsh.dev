@@ -1,10 +1,28 @@
 
-import React, { useEffect, useRef } from 'react';
-import { useInView } from '@react-three/drei';
+import React, { useEffect, useRef, useState } from 'react';
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = sectionRef.current ? window.innerHeight > sectionRef.current.getBoundingClientRect().top + 100 : false;
+  const [isInView, setIsInView] = useState(false);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+    
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
   
   const skills = [
     "JavaScript (ES6+)", "TypeScript", "React", "Node.js", 
