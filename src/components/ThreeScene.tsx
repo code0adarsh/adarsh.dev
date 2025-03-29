@@ -1,19 +1,15 @@
 
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 
+// Simpler sphere with no problematic props
 const AnimatedSphere = () => {
   return (
-    <Sphere args={[1, 100, 200]} position={[0, 0, 0]}>
-      <MeshDistortMaterial 
-        color="#64FFDA" 
-        attach="material" 
-        distort={0.4} 
-        speed={2} 
-        roughness={0.5}
-      />
-    </Sphere>
+    <mesh>
+      <sphereGeometry args={[1, 64, 64]} />
+      <meshStandardMaterial color="#64FFDA" />
+    </mesh>
   );
 };
 
