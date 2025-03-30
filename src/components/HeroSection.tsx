@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 
-// Use React's lazy loading instead of react-dynamic-import
+// Use React's lazy loading
 const ThreeScene = lazy(() => import('./ThreeScene'));
 
 const HeroSection = () => {
@@ -59,7 +59,7 @@ const HeroSection = () => {
         >
           <div className="text-teal font-mono mb-6">Hi, my name is</div>
           <h1 className="text-5xl md:text-7xl font-bold text-lightSlate mb-4">
-            John Doe
+            Adarsh Pradhan
           </h1>
           <h2 className="text-4xl md:text-6xl font-bold text-slate mb-6">
             I build things for the web.
@@ -71,7 +71,7 @@ const HeroSection = () => {
           className="text-slate max-w-2xl mb-12 text-lg opacity-0 transform translate-y-8 transition-all duration-700 ease-out delay-300"
         >
           I'm a software developer specializing in building exceptional digital experiences. 
-          Currently focused on building accessible, human-centered products at Company Inc.
+          Currently focused on AI-powered applications and full-stack development.
         </p>
         
         <div 

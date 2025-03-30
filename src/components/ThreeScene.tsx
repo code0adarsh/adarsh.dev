@@ -1,51 +1,24 @@
 
-import React, { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-
-// Simple animated sphere without problematic props
-const AnimatedSphere = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-  
-  // Use useFrame for smooth animation
-  useFrame(() => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += 0.002;
-      meshRef.current.rotation.y += 0.002;
-    }
-  });
-
-  return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="#64FFDA" />
-    </mesh>
-  );
-};
+import React from 'react';
+import { SplashCursor } from '@/components/ui/splash-cursor';
 
 const ThreeScene = () => {
   return (
-    <div className="absolute inset-0 opacity-70">
-      <Canvas 
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 5], fov: 50 }}
-        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-      >
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -5]} intensity={1} />
-        
-        <AnimatedSphere />
-        
-        <OrbitControls 
-          enableZoom={false} 
-          enablePan={false}
-          rotateSpeed={0.5}
-          autoRotate
-          autoRotateSpeed={0.5}
-        />
-      </Canvas>
-    </div>
+    <SplashCursor 
+      SIM_RESOLUTION={128}
+      DYE_RESOLUTION={1024}
+      DENSITY_DISSIPATION={4}
+      VELOCITY_DISSIPATION={2.2}
+      PRESSURE={0.8}
+      PRESSURE_ITERATIONS={20}
+      CURL={30}
+      SPLAT_RADIUS={0.3}
+      SPLAT_FORCE={6000}
+      SHADING={true}
+      COLOR_UPDATE_SPEED={10}
+      BACK_COLOR={{ r: 0.05, g: 0.1, b: 0.2 }}  // Dark navy blue
+      TRANSPARENT={true}
+    />
   );
 };
 
