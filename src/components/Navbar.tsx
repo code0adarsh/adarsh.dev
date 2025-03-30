@@ -21,6 +21,18 @@ const Navbar = () => {
     { id: 'contact', name: 'Contact' },
   ];
 
+  // Scroll to section function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      setIsMenuOpen(false);
+      window.scrollTo({
+        top: element.offsetTop - 100, // Offset for the fixed navbar
+        behavior: 'smooth'
+      });
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentPosition = window.scrollY;
@@ -62,7 +74,11 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="#home" className="text-2xl font-bold text-teal">
+        <a 
+          href="#home" 
+          onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
+          className="text-2xl font-bold text-teal"
+        >
           Adarsh
         </a>
         
@@ -71,9 +87,24 @@ const Navbar = () => {
           <NavMenu setActive={setActive}>
             <MenuItem setActive={setActive} active={active} item="Home">
               <div className="flex flex-col space-y-2 min-w-40">
-                <Link to="/#home" className="text-slate hover:text-teal transition-colors">Welcome</Link>
-                <Link to="/#about" className="text-slate hover:text-teal transition-colors">About Me</Link>
-                <Link to="/#projects" className="text-slate hover:text-teal transition-colors">My Projects</Link>
+                <a 
+                  onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} 
+                  className="text-slate hover:text-teal transition-colors cursor-pointer"
+                >
+                  Welcome
+                </a>
+                <a 
+                  onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} 
+                  className="text-slate hover:text-teal transition-colors cursor-pointer"
+                >
+                  About Me
+                </a>
+                <a 
+                  onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} 
+                  className="text-slate hover:text-teal transition-colors cursor-pointer"
+                >
+                  My Projects
+                </a>
               </div>
             </MenuItem>
             
@@ -108,9 +139,28 @@ const Navbar = () => {
             
             <MenuItem setActive={setActive} active={active} item="Contact">
               <div className="flex flex-col space-y-2 min-w-40">
-                <a href="mailto:pradhanadarsh001@gmail.com" className="text-slate hover:text-teal transition-colors">Email</a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-slate hover:text-teal transition-colors">LinkedIn</a>
-                <a href="https://github.com/code0adarsh" target="_blank" rel="noopener noreferrer" className="text-slate hover:text-teal transition-colors">GitHub</a>
+                <a 
+                  href="mailto:pradhanadarsh001@gmail.com" 
+                  className="text-slate hover:text-teal transition-colors"
+                >
+                  Email
+                </a>
+                <a 
+                  href="https://linkedin.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-slate hover:text-teal transition-colors"
+                >
+                  LinkedIn
+                </a>
+                <a 
+                  href="https://github.com/code0adarsh" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-slate hover:text-teal transition-colors"
+                >
+                  GitHub
+                </a>
               </div>
             </MenuItem>
           </NavMenu>
@@ -145,9 +195,8 @@ const Navbar = () => {
           {sections.map((section, index) => (
             <a 
               key={section.id}
-              href={`#${section.id}`}
-              className="text-lg text-slate hover:text-teal transition-colors"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={(e) => { e.preventDefault(); scrollToSection(section.id); }}
+              className="text-lg text-slate hover:text-teal transition-colors cursor-pointer"
             >
               <span className="text-teal mr-1">{String(index + 1).padStart(2, '0')}.</span>
               {section.name}
