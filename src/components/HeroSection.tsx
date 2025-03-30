@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { motion } from 'framer-motion';
 
 // Use React's lazy loading
 const ThreeScene = lazy(() => import('./ThreeScene'));
@@ -53,38 +54,72 @@ const HeroSection = () => {
       )}
       
       <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-8">
-        <div 
+        <motion.div 
           ref={titleRef}
           className="opacity-0 transform translate-y-8 transition-all duration-700 ease-out"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="text-teal font-mono mb-6">Hi, my name is</div>
-          <h1 className="text-5xl md:text-7xl font-bold text-lightSlate mb-4">
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold text-lightSlate mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             Adarsh Pradhan
-          </h1>
-          <h2 className="text-4xl md:text-6xl font-bold text-slate mb-6">
+          </motion.h1>
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold text-slate mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
             I build things for the web.
-          </h2>
-        </div>
+          </motion.h2>
+        </motion.div>
         
-        <p 
+        <motion.p 
           ref={subtitleRef}
           className="text-slate max-w-2xl mb-12 text-lg opacity-0 transform translate-y-8 transition-all duration-700 ease-out delay-300"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.8 }}
         >
           I'm a software developer specializing in building exceptional digital experiences. 
-          Currently focused on AI-powered applications and full-stack development.
-        </p>
+          Currently focused on AI-powered applications and full-stack development with expertise in React, Node.js, and modern web technologies.
+        </motion.p>
         
-        <div 
+        <motion.div 
           ref={ctaRef}
           className="opacity-0 transform translate-y-8 transition-all duration-700 ease-out delay-500"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 1 }}
         >
-          <a href="#projects" className="btn-primary inline-block font-mono">
-            Check out my work!
+          <a 
+            href="#projects" 
+            className="btn-primary inline-block font-mono relative overflow-hidden group"
+          >
+            <span className="relative z-10">Check out my work!</span>
+            <span className="absolute inset-0 bg-teal/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
           </a>
-        </div>
+        </motion.div>
       </div>
       
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <motion.div 
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ 
+          duration: 1,
+          delay: 1.5,
+          repeat: Infinity,
+          repeatType: "reverse",
+          repeatDelay: 0.5
+        }}
+      >
         <a href="#about" className="text-teal">
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -100,7 +135,7 @@ const HeroSection = () => {
             <path d="M12 5v14M5 12l7 7 7-7"/>
           </svg>
         </a>
-      </div>
+      </motion.div>
     </section>
   );
 };

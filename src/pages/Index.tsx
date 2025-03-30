@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
@@ -10,7 +10,7 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   useEffect(() => {
-    document.title = "John Doe | Web Developer Portfolio";
+    document.title = "Adarsh Pradhan | Software Developer";
   }, []);
 
   return (
