@@ -81,17 +81,17 @@ export const ProductItem = ({
   title,
   description,
   href,
-  imgSrc,
+  src,
 }: {
   title: string;
   description: string;
   href: string;
-  imgSrc: string;
+  src: string;
 }) => {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer" className="flex space-x-2 group">
       <img
-        src={imgSrc}
+        src={src}
         width={140}
         height={70}
         alt={title}

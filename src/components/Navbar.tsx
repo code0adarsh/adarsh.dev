@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Github, Linkedin, Twitter } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -66,6 +65,9 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Check if we're on the home page
+  const isHomePage = window.location.pathname === '/';
+
   return (
     <nav 
       className={cn(
@@ -74,95 +76,111 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <a 
-          href="#home" 
-          onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
+        <Link 
+          to="/" 
           className="text-2xl font-bold text-teal"
         >
           Adarsh
-        </a>
+        </Link>
         
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center">
           <NavMenu setActive={setActive}>
-            <MenuItem setActive={setActive} active={active} item="Home">
-              <div className="flex flex-col space-y-2 min-w-40">
-                <a 
-                  onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} 
-                  className="text-slate hover:text-teal transition-colors cursor-pointer"
+            {isHomePage ? (
+              // Home page navigation (scroll to sections)
+              <>
+                <MenuItem setActive={setActive} active={active} item="Projects">
+                  <div className="text-sm grid grid-cols-2 gap-6 p-4 min-w-[500px]">
+                    <ProductItem
+                      title="AIRA"
+                      href="https://github.com/code0adarsh/AIRA"
+                      src="https://images.unsplash.com/photo-1677442135136-760c813a746d?q=80&w=2832&auto=format&fit=crop"
+                      description="AI Research Assistant integrating 5 modular features"
+                    />
+                    <ProductItem
+                      title="Prepify AI"
+                      href="https://github.com/code0adarsh"
+                      src="https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop"
+                      description="AI-powered career platform with React, Node.js, and Google Generative AI"
+                    />
+                    <ProductItem
+                      title="Teaching Platform"
+                      href="https://github.com/code0adarsh"
+                      src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=2070&auto=format&fit=crop"
+                      description="Teaching platform for CS courses with personalized approach"
+                    />
+                    <ProductItem
+                      title="Portfolio"
+                      href="https://github.com/code0adarsh"
+                      src="https://images.unsplash.com/photo-1675348304916-f14ce5a65071?q=80&w=2070&auto=format&fit=crop"
+                      description="Personal portfolio showcasing skills and projects"
+                    />
+                  </div>
+                </MenuItem>
+                <span 
+                  onClick={() => scrollToSection('about')} 
+                  className="cursor-pointer px-4 text-slate hover:text-teal transition-colors"
                 >
-                  Welcome
-                </a>
-                <a 
-                  onClick={(e) => { e.preventDefault(); scrollToSection('about'); }} 
-                  className="text-slate hover:text-teal transition-colors cursor-pointer"
+                  About
+                </span>
+                <span 
+                  onClick={() => scrollToSection('projects')} 
+                  className="cursor-pointer px-4 text-slate hover:text-teal transition-colors"
                 >
-                  About Me
-                </a>
-                <a 
-                  onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }} 
-                  className="text-slate hover:text-teal transition-colors cursor-pointer"
+                  Projects
+                </span>
+                <Link 
+                  to="/blog" 
+                  className="px-4 text-slate hover:text-teal transition-colors"
                 >
-                  My Projects
-                </a>
-              </div>
-            </MenuItem>
-            
-            <MenuItem setActive={setActive} active={active} item="Projects">
-              <div className="text-sm grid grid-cols-2 gap-6 p-4 min-w-[500px]">
-                <ProductItem
-                  title="AIRA"
-                  href="https://github.com/code0adarsh/AIRA"
-                  imgSrc="https://images.unsplash.com/photo-1677442135136-760c813a746d?q=80&w=2832&auto=format&fit=crop"
-                  description="AI Research Assistant integrating 5 modular features"
-                />
-                <ProductItem
-                  title="Prepify AI"
-                  href="https://github.com/code0adarsh"
-                  imgSrc="https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop"
-                  description="AI-powered career platform with React, Node.js, and Google Generative AI"
-                />
-                <ProductItem
-                  title="Teaching Platform"
-                  href="https://github.com/code0adarsh"
-                  imgSrc="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=2070&auto=format&fit=crop"
-                  description="Teaching platform for CS courses with personalized approach"
-                />
-                <ProductItem
-                  title="Portfolio"
-                  href="https://github.com/code0adarsh"
-                  imgSrc="https://images.unsplash.com/photo-1675348304916-f14ce5a65071?q=80&w=2070&auto=format&fit=crop"
-                  description="Personal portfolio showcasing skills and projects"
-                />
-              </div>
-            </MenuItem>
-            
-            <MenuItem setActive={setActive} active={active} item="Contact">
-              <div className="flex flex-col space-y-2 min-w-40">
-                <a 
-                  href="mailto:pradhanadarsh001@gmail.com" 
-                  className="text-slate hover:text-teal transition-colors"
+                  Blog
+                </Link>
+                <span 
+                  onClick={() => scrollToSection('contact')} 
+                  className="cursor-pointer px-4 text-slate hover:text-teal transition-colors"
                 >
-                  Email
-                </a>
-                <a 
-                  href="https://linkedin.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-slate hover:text-teal transition-colors"
-                >
-                  LinkedIn
-                </a>
-                <a 
-                  href="https://github.com/code0adarsh" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-slate hover:text-teal transition-colors"
-                >
-                  GitHub
-                </a>
-              </div>
-            </MenuItem>
+                  Contact
+                </span>
+              </>
+            ) : (
+              // Other pages navigation (use Links)
+              <>
+                <Link to="/" className="px-4 text-slate hover:text-teal transition-colors">
+                  Home
+                </Link>
+                <Link to="/blog" className="px-4 text-slate hover:text-teal transition-colors">
+                  Blog
+                </Link>
+                <MenuItem setActive={setActive} active={active} item="Projects">
+                  <div className="text-sm grid grid-cols-2 gap-6 p-4 min-w-[500px]">
+                    <ProductItem
+                      title="AIRA"
+                      href="https://github.com/code0adarsh/AIRA"
+                      src="https://images.unsplash.com/photo-1677442135136-760c813a746d?q=80&w=2832&auto=format&fit=crop"
+                      description="AI Research Assistant integrating 5 modular features"
+                    />
+                    <ProductItem
+                      title="Prepify AI"
+                      href="https://github.com/code0adarsh"
+                      src="https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop"
+                      description="AI-powered career platform with React, Node.js, and Google Generative AI"
+                    />
+                    <ProductItem
+                      title="Teaching Platform"
+                      href="https://github.com/code0adarsh"
+                      src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=2070&auto=format&fit=crop"
+                      description="Teaching platform for CS courses with personalized approach"
+                    />
+                    <ProductItem
+                      title="Portfolio"
+                      href="https://github.com/code0adarsh"
+                      src="https://images.unsplash.com/photo-1675348304916-f14ce5a65071?q=80&w=2070&auto=format&fit=crop"
+                      description="Personal portfolio showcasing skills and projects"
+                    />
+                  </div>
+                </MenuItem>
+              </>
+            )}
           </NavMenu>
           
           <div className="flex space-x-4 ml-8">
@@ -192,16 +210,48 @@ const Navbar = () => {
         )}
       >
         <div className="flex flex-col space-y-6 text-center">
-          {sections.map((section, index) => (
-            <a 
-              key={section.id}
-              onClick={(e) => { e.preventDefault(); scrollToSection(section.id); }}
-              className="text-lg text-slate hover:text-teal transition-colors cursor-pointer"
-            >
-              <span className="text-teal mr-1">{String(index + 1).padStart(2, '0')}.</span>
-              {section.name}
-            </a>
-          ))}
+          {isHomePage ? (
+            // Home page navigation for mobile
+            sections.map((section, index) => (
+              <a 
+                key={section.id}
+                onClick={(e) => { e.preventDefault(); scrollToSection(section.id); }}
+                className="text-lg text-slate hover:text-teal transition-colors cursor-pointer"
+              >
+                <span className="text-teal mr-1">{String(index + 1).padStart(2, '0')}.</span>
+                {section.name}
+              </a>
+            ))
+          ) : (
+            // Other pages navigation for mobile
+            <>
+              <Link 
+                to="/" 
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg text-slate hover:text-teal transition-colors"
+              >
+                <span className="text-teal mr-1">01.</span>
+                Home
+              </Link>
+              <Link 
+                to="/blog" 
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg text-slate hover:text-teal transition-colors"
+              >
+                <span className="text-teal mr-1">02.</span>
+                Blog
+              </Link>
+              <a 
+                href="https://github.com/code0adarsh" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-lg text-slate hover:text-teal transition-colors"
+              >
+                <span className="text-teal mr-1">03.</span>
+                GitHub
+              </a>
+            </>
+          )}
         </div>
         <div className="flex space-x-6 mt-12">
           <a href="https://github.com/code0adarsh" target="_blank" rel="noopener noreferrer" className="text-slate hover:text-teal transition-colors">

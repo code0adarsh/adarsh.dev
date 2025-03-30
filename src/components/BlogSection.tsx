@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface BlogPostProps {
   title: string;
@@ -35,10 +36,10 @@ const BlogCard = ({ title, excerpt, date, readTime, category, slug, image }: Blo
         </div>
         <h3 className="text-xl font-bold text-lightSlate mb-2 line-clamp-2">{title}</h3>
         <p className="text-slate mb-4 flex-grow line-clamp-3">{excerpt}</p>
-        <a href={`/blog/${slug}`} className="flex items-center text-teal font-medium group">
+        <Link to={`/blog/${slug}`} className="flex items-center text-teal font-medium group">
           Read More 
           <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </a>
+        </Link>
       </div>
     </motion.article>
   );
@@ -66,10 +67,10 @@ const FeaturedBlogPost = ({ title, excerpt, date, readTime, category, slug, imag
         </div>
         <h3 className="text-2xl font-bold text-lightSlate mb-3">{title}</h3>
         <p className="text-slate mb-4">{excerpt}</p>
-        <a href={`/blog/${slug}`} className="flex items-center text-teal font-medium group">
+        <Link to={`/blog/${slug}`} className="flex items-center text-teal font-medium group">
           Read Full Article 
           <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </a>
+        </Link>
       </div>
     </motion.article>
   );
@@ -82,7 +83,7 @@ const BlogSection = () => {
     date: "May 10, 2024",
     readTime: "8 min read",
     category: "AI Development",
-    slug: "future-ai-development-2024",
+    slug: "understanding-future-ai-development-2024",
     image: "https://images.unsplash.com/photo-1677442135136-760c813a746d?q=80&w=2832&auto=format&fit=crop"
   };
 
@@ -177,9 +178,9 @@ const BlogSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <a href="/blog" className="btn-primary inline-block hover:scale-105 transition-transform">
+          <Link to="/blog" className="btn-primary inline-block hover:scale-105 transition-transform">
             View All Articles
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
