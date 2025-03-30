@@ -6,14 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Facebook, Instagram, Linkedin, Moon, Send, Sun, Twitter, Github } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Moon, Send, Sun, Twitter } from "lucide-react"
 
 function Footerdemo() {
   const [isDarkMode, setIsDarkMode] = React.useState(true)
@@ -28,19 +27,19 @@ function Footerdemo() {
   }, [isDarkMode])
 
   return (
-    <footer className="relative border-t border-teal/10 bg-navy text-slate transition-colors duration-300">
+    <footer className="relative border-t bg-navy text-white transition-colors duration-300">
       <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-lightSlate">Let's Connect</h2>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight">Stay Connected</h2>
             <p className="mb-6 text-slate">
-              Join the newsletter for updates on my latest projects and tech articles.
+              Join our newsletter for the latest updates and exclusive offers.
             </p>
             <form className="relative">
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="pr-12 border-teal/20 bg-navy text-lightSlate backdrop-blur-sm focus:border-teal focus-visible:ring-teal/30"
+                className="pr-12 backdrop-blur-sm bg-navy/80 border-teal/20 text-white"
               />
               <Button
                 type="submit"
@@ -54,13 +53,13 @@ function Footerdemo() {
             <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-teal/10 blur-2xl" />
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-lightSlate">Navigation</h3>
+            <h3 className="mb-4 text-lg font-semibold text-lightSlate">Quick Links</h3>
             <nav className="space-y-2 text-sm">
-              <a href="#home" className="block transition-colors hover:text-teal">
+              <a href="#" className="block transition-colors hover:text-teal">
                 Home
               </a>
               <a href="#about" className="block transition-colors hover:text-teal">
-                About Me
+                About
               </a>
               <a href="#projects" className="block transition-colors hover:text-teal">
                 Projects
@@ -68,17 +67,18 @@ function Footerdemo() {
               <a href="#blog" className="block transition-colors hover:text-teal">
                 Blog
               </a>
-              <a href="#contact" className="block transition-colors hover:text-teal">
-                Contact
+              <a href="https://github.com/code0adarsh" target="_blank" rel="noopener noreferrer" className="block transition-colors hover:text-teal">
+                GitHub
               </a>
             </nav>
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold text-lightSlate">Contact</h3>
-            <address className="space-y-2 text-sm not-italic">
-              <p>Bangalore, India</p>
-              <p>Email: pradhanadarsh001@gmail.com</p>
-              <p>GitHub: code0adarsh</p>
+            <h3 className="mb-4 text-lg font-semibold text-lightSlate">Contact Me</h3>
+            <address className="space-y-2 text-sm not-italic text-slate">
+              <p>Mumbai, Maharashtra</p>
+              <p>India</p>
+              <p>Phone: (+91) 987-654-3210</p>
+              <p>Email: adarsh@example.com</p>
             </address>
           </div>
           <div className="relative">
@@ -87,25 +87,25 @@ function Footerdemo() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full border-teal/20 hover:border-teal hover:bg-teal/10">
-                      <Github className="h-4 w-4" />
-                      <span className="sr-only">GitHub</span>
+                    <Button variant="outline" size="icon" className="rounded-full border-slate/20 hover:border-teal/50 hover:bg-teal/10">
+                      <Facebook className="h-4 w-4" />
+                      <span className="sr-only">Facebook</span>
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Follow me on GitHub</p>
+                  <TooltipContent className="bg-navy border-teal/20">
+                    <p>Follow me on Facebook</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full border-teal/20 hover:border-teal hover:bg-teal/10">
+                    <Button variant="outline" size="icon" className="rounded-full border-slate/20 hover:border-teal/50 hover:bg-teal/10">
                       <Twitter className="h-4 w-4" />
                       <span className="sr-only">Twitter</span>
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
+                  <TooltipContent className="bg-navy border-teal/20">
                     <p>Follow me on Twitter</p>
                   </TooltipContent>
                 </Tooltip>
@@ -113,12 +113,12 @@ function Footerdemo() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full border-teal/20 hover:border-teal hover:bg-teal/10">
+                    <Button variant="outline" size="icon" className="rounded-full border-slate/20 hover:border-teal/50 hover:bg-teal/10">
                       <Instagram className="h-4 w-4" />
                       <span className="sr-only">Instagram</span>
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
+                  <TooltipContent className="bg-navy border-teal/20">
                     <p>Follow me on Instagram</p>
                   </TooltipContent>
                 </Tooltip>
@@ -126,42 +126,45 @@ function Footerdemo() {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="icon" className="rounded-full border-teal/20 hover:border-teal hover:bg-teal/10">
+                    <Button variant="outline" size="icon" className="rounded-full border-slate/20 hover:border-teal/50 hover:bg-teal/10">
                       <Linkedin className="h-4 w-4" />
                       <span className="sr-only">LinkedIn</span>
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>
+                  <TooltipContent className="bg-navy border-teal/20">
                     <p>Connect with me on LinkedIn</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
             <div className="flex items-center space-x-2">
-              <Sun className="h-4 w-4 text-teal" />
+              <Sun className="h-4 w-4 text-slate" />
               <Switch
                 id="dark-mode"
                 checked={isDarkMode}
                 onCheckedChange={setIsDarkMode}
-                className="data-[state=checked]:bg-teal data-[state=unchecked]:bg-slate/30"
+                className="data-[state=checked]:bg-teal"
               />
-              <Moon className="h-4 w-4 text-teal" />
+              <Moon className="h-4 w-4 text-slate" />
               <Label htmlFor="dark-mode" className="sr-only">
                 Toggle dark mode
               </Label>
             </div>
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-teal/10 pt-8 text-center md:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate/10 pt-8 text-center md:flex-row">
           <p className="text-sm text-slate">
             © 2024 Adarsh Pradhan. All rights reserved.
           </p>
           <nav className="flex gap-4 text-sm">
-            <a href="#" className="transition-colors hover:text-teal">
+            <a href="#" className="transition-colors hover:text-teal text-slate">
               Privacy Policy
             </a>
-            <a href="#" className="transition-colors hover:text-teal">
+            <a href="#" className="transition-colors hover:text-teal text-slate">
               Terms of Service
+            </a>
+            <a href="#" className="transition-colors hover:text-teal text-slate">
+              Cookie Settings
             </a>
           </nav>
         </div>

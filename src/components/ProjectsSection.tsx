@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ProjectCard, { ProjectProps } from './ProjectCard';
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useMemo } from 'react';
 
 const ProjectsSection = () => {
   const [filter, setFilter] = useState<string>('all');
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   
   const projects: ProjectProps[] = [
     {
@@ -13,7 +16,8 @@ const ProjectsSection = () => {
       tags: ["React", "Node.js", "MongoDB", "TailwindCSS", "OpenAI"],
       github: "https://github.com/code0adarsh",
       demo: "https://demo.com",
-      featured: true
+      featured: true,
+      image: "https://images.unsplash.com/photo-1677442135136-760c813a746d?q=80&w=2832&auto=format&fit=crop"
     },
     {
       title: "E-Commerce Dashboard",
@@ -22,7 +26,8 @@ const ProjectsSection = () => {
       github: "https://github.com/code0adarsh",
       demo: "https://demo.com",
       featured: true,
-      reversed: true
+      reversed: true,
+      image: "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop"
     },
     {
       title: "AIRA - AI Research Assistant",
@@ -30,7 +35,8 @@ const ProjectsSection = () => {
       tags: ["Python", "TensorFlow", "React", "Flask", "MongoDB"],
       github: "https://github.com/code0adarsh/AIRA",
       demo: "https://github.com/code0adarsh/AIRA",
-      featured: true
+      featured: true,
+      image: "https://images.unsplash.com/photo-1681492805688-224c1074dcf2?q=80&w=2070&auto=format&fit=crop"
     },
     {
       title: "Prepify AI",
@@ -39,57 +45,46 @@ const ProjectsSection = () => {
       github: "https://github.com/code0adarsh",
       demo: "https://github.com/code0adarsh",
       featured: true,
-      reversed: true
+      reversed: true,
+      image: "https://images.unsplash.com/photo-1675348304916-f14ce5a65071?q=80&w=2070&auto=format&fit=crop"
     },
     {
       title: "Teaching Platform",
       description: "Interactive platform for computer science education featuring code execution, collaborative projects, and personalized learning paths.",
       tags: ["React", "Express", "MongoDB", "WebSockets"],
       github: "https://github.com/code0adarsh",
-      demo: "https://github.com/code0adarsh"
+      demo: "https://github.com/code0adarsh",
+      image: "https://images.unsplash.com/photo-1577375729152-4c8b5fcda381?q=80&w=2080&auto=format&fit=crop"
     },
     {
       title: "Cryptocurrency Dashboard",
       description: "Real-time cryptocurrency tracking dashboard with price alerts, portfolio management, and predictive analytics.",
       tags: ["React", "D3.js", "Express", "WebSockets"],
       github: "https://github.com/code0adarsh",
-      demo: "https://github.com/code0adarsh"
+      demo: "https://github.com/code0adarsh",
+      image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?q=80&w=2232&auto=format&fit=crop"
     }
   ];
   
   const categories = ['all', 'react', 'node.js', 'python', 'mongodb'];
   
-  const filteredProjects = projects.filter(project => {
-    if (filter === 'all') return true;
-    return project.tags.some(tag => tag.toLowerCase() === filter.toLowerCase());
-  });
+  const filteredProjects = useMemo(() => {
+    return projects.filter(project => {
+      if (filter === 'all') return true;
+      return project.tags.some(tag => tag.toLowerCase() === filter.toLowerCase());
+    });
+  }, [filter, projects]);
   
   const featuredProjects = filteredProjects.filter(project => project.featured);
   const otherProjects = filteredProjects.filter(project => !project.featured);
 
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
   return (
-    <section id="projects" className="section-padding bg-navy text-slate">
-      <div className="max-w-5xl mx-auto">
+    <section id="projects" className="section-padding bg-navy text-slate" ref={ref}>
+      <div className="max-w-6xl mx-auto">
         <motion.h2 
           className="section-title text-lightSlate"
           initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
         >
           Things I've Built
@@ -99,8 +94,7 @@ const ProjectsSection = () => {
           <motion.div 
             className="flex justify-center flex-wrap gap-2 mb-8"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <ToggleGroup type="single" value={filter} onValueChange={(value) => value && setFilter(value)}>
@@ -122,13 +116,17 @@ const ProjectsSection = () => {
           
           <motion.div 
             className="mb-20"
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
           >
             {featuredProjects.map((project, index) => (
-              <motion.div key={index} variants={item}>
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              >
                 <ProjectCard {...project} />
               </motion.div>
             ))}
@@ -137,23 +135,30 @@ const ProjectsSection = () => {
           <motion.h3 
             className="text-2xl font-bold text-lightSlate mb-8 text-center"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
             Other Noteworthy Projects
           </motion.h3>
           
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
           >
             {otherProjects.map((project, index) => (
-              <motion.div key={index} variants={item}>
-                <ProjectCard {...project} />
+              <motion.div 
+                key={index} 
+                className={`${index % 5 === 0 ? 'md:col-span-8' : 'md:col-span-4'} ${
+                  index % 5 === 1 ? 'md:row-span-2' : ''
+                }`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.4, delay: 0.1 * index }}
+                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              >
+                <ProjectCard {...project} bentoStyle={true} />
               </motion.div>
             ))}
           </motion.div>
@@ -162,9 +167,8 @@ const ProjectsSection = () => {
         <motion.div 
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
         >
           <a 
             href="https://github.com/code0adarsh" 

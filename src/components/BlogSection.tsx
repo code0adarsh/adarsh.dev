@@ -1,8 +1,15 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface BlogPostProps {
   title: string;
@@ -22,10 +29,12 @@ const BlogCard = ({ title, excerpt, date, readTime, category, slug, image }: Blo
     >
       {image && (
         <div className="h-48 overflow-hidden">
-          <img 
+          <motion.img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+            className="w-full h-full object-cover" 
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5 }}
           />
         </div>
       )}
@@ -53,10 +62,12 @@ const FeaturedBlogPost = ({ title, excerpt, date, readTime, category, slug, imag
     >
       {image && (
         <div className="md:w-2/5 h-64 md:h-auto overflow-hidden">
-          <img 
+          <motion.img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" 
+            className="w-full h-full object-cover" 
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.5 }}
           />
         </div>
       )}
@@ -77,6 +88,9 @@ const FeaturedBlogPost = ({ title, excerpt, date, readTime, category, slug, imag
 };
 
 const BlogSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+  
   const featuredPost: BlogPostProps = {
     title: "Understanding the Future of AI Development in 2024",
     excerpt: "Artificial Intelligence continues to evolve at an unprecedented pace. In this comprehensive guide, we explore the emerging trends, ethical considerations, and practical applications of AI technologies that are shaping our digital landscape.",
@@ -114,33 +128,34 @@ const BlogSection = () => {
       category: "React",
       slug: "state-management-react",
       image: "https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+      title: "Modern Design Systems with Tailwind CSS",
+      excerpt: "Build flexible and consistent design systems using Tailwind CSS. This guide explores component patterns, dark mode support, and design token integration.",
+      date: "March 25, 2024",
+      readTime: "5 min read",
+      category: "UI/UX",
+      slug: "modern-design-systems-tailwind",
+      image: "https://images.unsplash.com/photo-1617042375876-a13e36732a04?q=80&w=2070&auto=format&fit=crop"
+    },
+    {
+      title: "Advanced TypeScript Patterns for React",
+      excerpt: "Level up your React applications with advanced TypeScript patterns. Learn to leverage generics, utility types, and discriminated unions for type-safe components.",
+      date: "March 10, 2024",
+      readTime: "9 min read",
+      category: "TypeScript",
+      slug: "advanced-typescript-patterns",
+      image: "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=2066&auto=format&fit=crop"
     }
   ];
 
-  // Animation variants
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
   return (
-    <section id="blog" className="section-padding bg-navy text-slate">
+    <section id="blog" className="section-padding bg-navy text-slate" ref={ref}>
       <div className="max-w-5xl mx-auto">
         <motion.h2 
           className="section-title text-lightSlate"
           initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
         >
           Latest Articles
@@ -148,35 +163,51 @@ const BlogSection = () => {
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          className="mb-12"
         >
           {/* Featured Post */}
           <FeaturedBlogPost {...featuredPost} />
-        </motion.div>
-        
-        {/* Regular Posts */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          {posts.map((post, index) => (
-            <motion.div key={index} variants={item}>
-              <BlogCard {...post} />
-            </motion.div>
-          ))}
+          
+          {/* Mobile Carousel for posts */}
+          <div className="block lg:hidden mb-8">
+            <h3 className="text-xl font-bold text-lightSlate mb-6">More Articles</h3>
+            <Carousel className="w-full">
+              <CarouselContent>
+                {posts.map((post, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1">
+                      <BlogCard {...post} />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-1 bg-navy border-teal text-teal" />
+              <CarouselNext className="right-1 bg-navy border-teal text-teal" />
+            </Carousel>
+          </div>
+          
+          {/* Desktop Grid Layout */}
+          <div className="hidden lg:grid grid-cols-3 gap-6 mb-12">
+            {posts.slice(0, 3).map((post, index) => (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+              >
+                <BlogCard {...post} />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
         
         <motion.div 
           className="text-center"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
         >
           <Link to="/blog" className="btn-primary inline-block hover:scale-105 transition-transform">
             View All Articles

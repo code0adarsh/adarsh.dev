@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Twitter } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Twitter, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Menu as NavMenu, MenuItem, ProductItem, HoveredLink } from '@/components/ui/navbar-menu';
 import { Link } from 'react-router-dom';
