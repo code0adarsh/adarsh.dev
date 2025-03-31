@@ -31,14 +31,17 @@ const ProjectCard = ({
   if (bentoStyle) {
     return (
       <div className="relative h-full bg-navy rounded-lg border border-teal/10 overflow-hidden group hover:border-teal/30 transition-all duration-300">
-        {/* Background Image with Gradient Overlay */}
+        {/* Background Image without dark overlay */}
         {image && (
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-transparent z-10"></div>
             <img 
               src={image} 
               alt={title} 
-              className="w-full h-full object-cover object-center opacity-30 group-hover:opacity-40 transition-all duration-500 scale-100 group-hover:scale-110" 
+              onError={(e) => {
+                e.currentTarget.onerror = null; // prevents looping
+                e.currentTarget.src = "https://source.unsplash.com/random/800x600/?technology";
+              }}
+              className="w-full h-full object-cover object-center opacity-100 transition-all duration-500 scale-100 group-hover:scale-110" 
             />
           </div>
         )}
@@ -46,7 +49,9 @@ const ProjectCard = ({
         {/* Content */}
         <div className="relative z-20 h-full flex flex-col justify-between p-6">
           <div>
-            <h3 className="text-xl font-bold text-lightSlate mb-2 group-hover:text-teal transition-colors">{title}</h3>
+            <h3 className="text-xl font-bold text-lightSlate mb-2 group-hover:text-teal transition-colors">
+              {title}
+            </h3>
             <p className="text-slate mb-4 line-clamp-3">{description}</p>
           </div>
           
@@ -94,6 +99,7 @@ const ProjectCard = ({
       </div>
     );
   }
+  
   
   if (featured) {
     return (

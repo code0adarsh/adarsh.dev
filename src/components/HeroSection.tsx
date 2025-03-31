@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 
@@ -76,7 +75,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
-            I build things for the web.
+            I build things for the world.
           </motion.h2>
         </motion.div>
         
@@ -98,13 +97,23 @@ const HeroSection = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 1 }}
         >
-          <a 
-            href="#projects" 
-            className="btn-primary inline-block font-mono relative overflow-hidden group"
-          >
-            <span className="relative z-10">Check out my work!</span>
-            <span className="absolute inset-0 bg-teal/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
-          </a>
+          <div className="flex space-x-4">
+            <a 
+              href="#projects" 
+              className="btn-primary inline-block font-mono relative overflow-hidden group"
+            >
+              <span className="relative z-10">Check out my work!</span>
+              <span className="absolute inset-0 bg-teal/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+            </a>
+            <a 
+              href="/resume.pdf" 
+              download 
+              className="btn-primary inline-block font-mono relative overflow-hidden group"
+            >
+              <span className="relative z-10">Download Resume</span>
+              <span className="absolute inset-0 bg-teal/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+            </a>
+          </div>
         </motion.div>
       </div>
       

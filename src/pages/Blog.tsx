@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
 
 // Sample blog posts data

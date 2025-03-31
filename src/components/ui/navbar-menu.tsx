@@ -1,4 +1,3 @@
-
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
@@ -45,10 +44,7 @@ export const MenuItem = ({
                 layoutId="active" 
                 className="bg-navy/90 backdrop-blur-sm rounded-lg overflow-hidden border border-teal/20 shadow-xl"
               >
-                <motion.div
-                  layout
-                  className="w-max h-full p-4"
-                >
+                <motion.div layout className="w-max h-full p-4">
                   {children}
                 </motion.div>
               </motion.div>
@@ -89,7 +85,12 @@ export const ProductItem = ({
   src: string;
 }) => {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="flex space-x-2 group">
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex space-x-2 group"
+    >
       <img
         src={src}
         width={140}
@@ -101,15 +102,19 @@ export const ProductItem = ({
         <h4 className="text-xl font-bold mb-1 text-teal group-hover:text-teal-300 transition-colors">
           {title}
         </h4>
-        <p className="text-slate text-sm max-w-[10rem]">
-          {description}
-        </p>
+        <p className="text-slate text-sm max-w-[10rem]">{description}</p>
       </div>
     </a>
   );
 };
 
-export const HoveredLink = ({ children, to, ...rest }: { children: React.ReactNode, to: string, [key: string]: any }) => {
+// Define HoveredLinkProps by extending Link's props while omitting 'to' and 'children'
+type HoveredLinkProps = {
+  children: React.ReactNode;
+  to: string;
+} & Omit<React.ComponentProps<typeof Link>, "to" | "children">;
+
+export const HoveredLink = ({ children, to, ...rest }: HoveredLinkProps) => {
   return (
     <Link
       to={to}
