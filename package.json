@@ -1,5 +1,5 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "portfolio",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -47,6 +47,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "contentful": "^11.5.12",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.0.0",
     "framer-motion": "^12.6.2",

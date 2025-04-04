@@ -3,6 +3,7 @@ import { FaBars, FaTimes, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa
 import { cn } from '@/lib/utils';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu as NavMenu, MenuItem, ProductItem } from '@/components/ui/navbar-menu';
+import { Menu as LucideMenu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +44,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 20);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -51,6 +52,14 @@ const Navbar = () => {
   }, []);
 
   const isHomePage = location.pathname === '/';
+
+  const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/contact', label: 'Contact' }
+  ];
 
   return (
     <>
@@ -80,30 +89,26 @@ const Navbar = () => {
               </span>
               <span onClick={() => scrollToSection('projects')}>
                 <MenuItem setActive={setActive} active={active} item="Projects">
-                  <div className="text-sm grid grid-cols-2 gap-6 p-4 min-w-[500px]">
+                  <div className="text-sm grid grid-cols-2 gap-4 p-4 min-w-[450px]">
                     <ProductItem
-                      title="AIRA"
-                      href="https://github.com/code0adarsh/AIRA"
-                      src="https://images.unsplash.com/photo-1677442135136-760c813a746d?q=80&w=2832&auto=format&fit=crop"
-                      description="AI Research Assistant integrating 5 modular features"
+                      title="Prepify"
+                      href="https://github.com/code0adarsh/Prepify"
+                      description="AI-powered interview preparation platform with real-time feedback"
                     />
                     <ProductItem
-                      title="Prepify AI"
-                      href="https://github.com/code0adarsh"
-                      src="https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=2070&auto=format&fit=crop"
-                      description="AI-powered career platform with React, Node.js, and Google Generative AI"
+                      title="Teachify"
+                      href="https://github.com/code0adarsh/teachify"
+                      description="Interactive learning platform for computer science education"
                     />
                     <ProductItem
-                      title="Teaching Platform"
-                      href="https://github.com/code0adarsh"
-                      src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481?q=80&w=2070&auto=format&fit=crop"
-                      description="Teaching platform for CS courses with personalized approach"
+                      title="Research Agent"
+                      href="https://github.com/code0adarsh/research-agent"
+                      description="AI-powered research assistant for academic papers"
                     />
                     <ProductItem
-                      title="Portfolio"
-                      href="https://github.com/code0adarsh"
-                      src="https://images.unsplash.com/photo-1675348304916-f14ce5a65071?q=80&w=2070&auto=format&fit=crop"
-                      description="Personal portfolio showcasing skills and projects"
+                      title="Apple Clone"
+                      href="https://github.com/code0adarsh/Apple-Clone"
+                      description="Pixel-perfect clone of Apple's website with modern UI"
                     />
                   </div>
                 </MenuItem>
@@ -241,6 +246,26 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      {/* Mobile Navigation */}
+      <div
+        className={`md:hidden fixed inset-0 z-40 bg-navy-light/95 backdrop-blur-md transition-transform duration-300 ease-in-out ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col items-center justify-center min-h-screen space-y-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className="text-xl text-slate hover:text-teal transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </>
   );
 };

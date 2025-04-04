@@ -4,6 +4,8 @@ import Footer from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Calendar, Clock, Tag } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
+import BlogPostDetail from '@/components/BlogPostDetail';
+import BlogPage from '@/pages/BlogPage';
 
 // Sample blog posts data
 const blogPosts = [
@@ -483,89 +485,6 @@ const blogPosts = [
   }
 ];
 
-const BlogPostDetail = () => {
-  const { slug } = useParams();
-  const post = blogPosts.find(post => post.id === slug);
-  
-  useEffect(() => {
-    if (post) {
-      document.title = `${post.title} | Adarsh Pradhan`;
-    }
-  }, [post]);
-  
-  if (!post) {
-    return (
-      <div className="min-h-screen bg-navy text-white">
-        <Navbar />
-        <div className="pt-20 max-w-4xl mx-auto px-6 py-20">
-          <Link to="/blog" className="inline-flex items-center text-teal hover:underline mb-6">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to all posts
-          </Link>
-          <div className="text-center py-20">
-            <h1 className="text-3xl font-bold text-red-500 mb-4">Blog post not found</h1>
-            <p className="text-lg text-slate mb-6">The post you're looking for doesn't exist or may have been removed.</p>
-            <Link to="/blog" className="btn-primary">Browse all articles</Link>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-  
-  return (
-    <div className="min-h-screen bg-navy text-white">
-      <Navbar />
-      <div className="pt-20 mb-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto px-6 py-10"
-        >
-          <Link to="/blog" className="inline-flex items-center text-teal hover:underline mb-6">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to all posts
-          </Link>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-lightSlate mb-6">{post.title}</h1>
-          
-          <div className="flex items-center text-slate mb-8 space-x-4 flex-wrap">
-            <div className="flex items-center">
-              <Calendar className="h-4 w-4 mr-2" />
-              <span>{post.date}</span>
-            </div>
-            <div className="flex items-center">
-              <Clock className="h-4 w-4 mr-2" />
-              <span>{post.readTime}</span>
-            </div>
-            <div className="flex items-center">
-              <Tag className="h-4 w-4 mr-2" />
-              <span className="bg-teal/10 text-teal px-2 py-1 rounded text-sm">{post.category}</span>
-            </div>
-          </div>
-          
-          {post.image && (
-            <div className="w-full h-[300px] md:h-[500px] mb-10 overflow-hidden rounded-lg">
-              <img 
-                src={post.image} 
-                alt={post.title} 
-                className="w-full h-full object-cover" 
-              />
-            </div>
-          )}
-          
-          <div 
-            className="prose prose-lg md:prose-xl max-w-none prose-headings:text-lightSlate prose-p:text-slate prose-a:text-teal prose-blockquote:border-teal prose-strong:text-lightSlate prose-code:text-teal"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-        </motion.div>
-      </div>
-      <Footer />
-    </div>
-  );
-};
-
 const BlogListing = () => {
   useEffect(() => {
     document.title = "Blog | Adarsh Pradhan";
@@ -643,13 +562,13 @@ const BlogListing = () => {
 
 // This component conditionally renders either the blog listing or a specific post
 const Blog = () => {
-  const { slug } = useParams();
+  const { id } = useParams();
   
-  if (slug) {
+  if (id) {
     return <BlogPostDetail />;
   }
   
-  return <BlogListing />;
+  return <BlogPage />;
 };
 
 export default Blog;

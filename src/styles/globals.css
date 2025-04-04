@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    /* ... existing variables ... */
+  }
+
+  * {
+    @apply box-border m-0 p-0;
+  }
+
+  html,
+  body {
+    @apply overflow-x-hidden min-h-screen;
+    width: 100%;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none;
+  }
+
+  body {
+    @apply bg-navy text-slate;
+  }
+
+  img {
+    @apply max-w-full h-auto select-none;
+    -webkit-user-drag: none;
+  }
+
+  /* Improve button and link tap targets on mobile */
+  a, button {
+    @apply cursor-pointer touch-manipulation;
+  }
+}
+
+@layer components {
+  /* Responsive container */
+  .container {
+    @apply w-full mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: min(100vw, 1200px);
+  }
+
+  /* Section padding utility */
+  .section-padding {
+    @apply py-16 md:py-24 overflow-hidden;
+  }
+
+  /* Section title styles */
+  .section-title {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold text-lightSlate;
+  }
+
+  /* Card wrapper */
+  .card-wrapper {
+    @apply bg-navy-light/10 rounded-lg overflow-hidden;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg bg-teal text-navy font-semibold 
+           hover:bg-teal/90 transition-colors duration-300
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal focus:ring-offset-navy
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-lg border border-teal/20 text-teal font-semibold 
+           hover:bg-teal/10 transition-colors duration-300
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal focus:ring-offset-navy
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Gradient overlays */
+  .gradient-overlay-bottom {
+    @apply absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-transparent;
+  }
+
+  .gradient-overlay-top {
+    @apply absolute inset-0 bg-gradient-to-b from-navy/90 via-navy/50 to-transparent;
+  }
+
+  /* Text balance for better typography */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Improved focus styles */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal focus:ring-offset-navy;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-navy;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-teal/20 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-teal/30;
+} 

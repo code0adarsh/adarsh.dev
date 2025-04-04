@@ -77,32 +77,23 @@ export const ProductItem = ({
   title,
   description,
   href,
-  src,
 }: {
   title: string;
   description: string;
   href: string;
-  src: string;
 }) => {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex space-x-2 group"
+      className="block p-3 rounded-lg hover:bg-navy-light group transition-colors min-w-[200px]"
     >
-      <img
-        src={src}
-        width={140}
-        height={70}
-        alt={title}
-        className="flex-shrink-0 rounded-md shadow-md object-cover transition-transform group-hover:scale-105"
-      />
       <div>
-        <h4 className="text-xl font-bold mb-1 text-teal group-hover:text-teal-300 transition-colors">
+        <h4 className="text-lg font-bold mb-1 text-teal group-hover:text-teal-300 transition-colors">
           {title}
         </h4>
-        <p className="text-slate text-sm max-w-[10rem]">{description}</p>
+        <p className="text-slate text-sm max-w-[9rem]">{description}</p>
       </div>
     </a>
   );

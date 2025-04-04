@@ -3,6 +3,16 @@ import ProjectCard, { ProjectProps } from "./ProjectCard";
 import { motion, useInView } from "framer-motion";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
+interface GitHubRepo {
+  private: boolean;
+  stargazers_count: number;
+  name: string;
+  description: string;
+  language: string | null;
+  html_url: string;
+  homepage: string | null;
+}
+
 // Fallback image if no keyword matches.
 const defaultImage =
   "https://images.unsplash.com/photo-1581091012184-7b4e6d6f1d38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
@@ -25,11 +35,11 @@ const ProjectsSection = () => {
   useEffect(() => {
     fetch("https://api.github.com/users/code0adarsh/repos")
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: GitHubRepo[]) => {
         // Filter public repos and sort by stargazers_count (highest first)
-        const publicRepos = data.filter((repo: any) => !repo.private);
-        publicRepos.sort((a: any, b: any) => b.stargazers_count - a.stargazers_count);
-        const projects: ProjectProps[] = publicRepos.map((repo: any) => {
+        const publicRepos = data.filter((repo) => !repo.private);
+        publicRepos.sort((a, b) => b.stargazers_count - a.stargazers_count);
+        const projects: ProjectProps[] = publicRepos.map((repo) => {
           const language = repo.language ? repo.language.toLowerCase() : "";
           // Determine image based on repo name keywords.
           const repoName = repo.name.toLowerCase();
@@ -74,8 +84,8 @@ const ProjectsSection = () => {
   const displayedProjects = filter === "all" ? repos.slice(0, 6) : filteredProjects;
 
   return (
-    <section id="projects" className="section-padding bg-navy text-slate" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="section-padding bg-navy text-slate overflow-hidden" ref={ref}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.h2
           className="section-title text-lightSlate text-center mb-8"
           initial={{ opacity: 0, y: -20 }}
@@ -87,35 +97,40 @@ const ProjectsSection = () => {
 
         {/* Filter Toggle */}
         <motion.div
-          className="flex justify-center flex-wrap gap-2 mb-8"
+          className="flex justify-center mb-8 -mx-4 px-4"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <ToggleGroup
-            type="single"
-            value={filter}
-            onValueChange={(value) => value && setFilter(value)}
-          >
-            {categories.map((category) => (
-              <ToggleGroupItem
-                key={category}
-                value={category}
-                className={`px-4 py-2 rounded-full font-mono text-sm transition-all ${
-                  filter === category
-                    ? "bg-teal/20 text-teal border border-teal/20"
-                    : "bg-transparent text-slate hover:text-teal border border-transparent"
-                }`}
+          <div className="w-full overflow-x-auto pb-2 hide-scrollbar">
+            <div className="flex flex-nowrap justify-start md:justify-center min-w-max md:min-w-0 md:flex-wrap gap-2">
+              <ToggleGroup
+                type="single"
+                value={filter}
+                onValueChange={(value) => value && setFilter(value)}
+                className="flex flex-nowrap md:flex-wrap"
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
+                {categories.map((category) => (
+                  <ToggleGroupItem
+                    key={category}
+                    value={category}
+                    className={`px-4 py-2 rounded-full font-mono text-sm transition-all whitespace-nowrap ${
+                      filter === category
+                        ? "bg-teal/20 text-teal border border-teal/20"
+                        : "bg-transparent text-slate hover:text-teal border border-transparent"
+                    }`}
+                  >
+                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
+          </div>
         </motion.div>
 
         {/* Projects Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -123,9 +138,7 @@ const ProjectsSection = () => {
           {displayedProjects.map((project, index) => (
             <motion.div
               key={project.title}
-              className={`${
-                index % 5 === 0 ? "md:col-span-8" : "md:col-span-4"
-              } ${index % 5 === 1 ? "md:row-span-2" : ""}`}
+              className="w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.4, delay: 0.1 * index }}
